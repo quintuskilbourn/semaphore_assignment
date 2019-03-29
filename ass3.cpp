@@ -168,8 +168,72 @@ void *serve(void *args)
 
 
 
-int flowFunc(int ranRange){
-///		
+void flowFunc(bool flag){
+	int ran;
+	//// 0 for pflow
+	if (flag == 0)
+		ran = rand()%5+1;
+	else{
+		ran = rand()%10+1;
+	int placed = 0;					//track number of tokens actually placed in the queue incase of overflow
+
+	//Lock the mutex so elements will not be removed from the queue by other threads while being inserted
+	if(pthread_mutex_lock(&qmtx))
+	{
+		cout<<"Mutex Lock Error"<<endl;
+		exit(-1);
+	}
+
+	/////////////////////////////////
+	if(pthread_mutex_lock(&smtx))
+	{
+		cout<<"Mutex Lock Error"<<endl;
+		exit(-1);
+	}
+	/////////////////////////////////
+
+
+	for(int i = 0; i<ran;i++)
+	{
+		//case - queue is not full
+		//action - insert tokens into the queue
+		if(!(queue->isFull()))
+		{
+			queue->EnQueue(currentSeq);
+			currentSeq++;
+			queueLen++;
+			placed++;
+		}
+		//case - queue is full
+		//action - serve overflowed tokens
+		else
+		{
+			servTok++;
+			if(servTok>=maxC)
+			{
+				break;
+			}
+		}
+	}
+	if (flag !0)
+		cout<<placed<<"(FLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
+	else 
+		cout<<placed<<"(PFLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
+
+	//////////////////////////////////////////////
+	if(pthread_mutex_unlock(&smtx))
+	{
+		cout<<"Mutex Unlock Error"<<endl;
+		exit(-1);
+	}
+	/////////////////////////////////////////
+
+	//Unlock the mutex so other threads may access the queue again
+	if(pthread_mutex_unlock(&qmtx))
+	{
+		cout<<"Mutex Unlock Error"<<endl;
+		exit(-1);
+	}
 }
 
 
@@ -187,63 +251,7 @@ void *flow(void *args)
 	//Run until as many tokens as the user desires are served
 	while(servTok<maxC)
 	{
-		int ran = rand()%10+1;			//generate random number between 1 and 10 to determine number of tokens to be inserted
-		int placed = 0;					//track number of tokens actually placed in the queue incase of overflow
-
-		//Lock the mutex so elements will not be removed from the queue by other threads while being inserted
-		if(pthread_mutex_lock(&qmtx))
-		{
-			cout<<"Mutex Lock Error"<<endl;
-			exit(-1);
-		}
-
-		/////////////////////////////////
-		if(pthread_mutex_lock(&smtx))
-		{
-			cout<<"Mutex Lock Error"<<endl;
-			exit(-1);
-		}
-		/////////////////////////////////
-
-
-		for(int i = 0; i<ran;i++)
-		{
-			//case - queue is not full
-			//action - insert tokens into the queue
-			if(!(queue->isFull()))
-			{
-				queue->EnQueue(currentSeq);
-				currentSeq++;
-				queueLen++;
-				placed++;
-			}
-			//case - queue is full
-			//action - serve overflowed tokens
-			else
-			{
-				servTok++;
-				if(servTok>=maxC)
-				{
-					break;
-				}
-			}
-		}
-		cout<<placed<<"(FLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
-
-		//////////////////////////////////////////////
-		if(pthread_mutex_unlock(&smtx))
-		{
-			cout<<"Mutex Unlock Error"<<endl;
-			exit(-1);
-		}
-		/////////////////////////////////////////
-
-		//Unlock the mutex so other threads may access the queue again
-		if(pthread_mutex_unlock(&qmtx))
-		{
-			cout<<"Mutex Unlock Error"<<endl;
-			exit(-1);
-		}
+		flowFunc(1);
 
 		//Sleep for a user defined time period
 		usleep(flowInt*1000000);
@@ -267,79 +275,10 @@ void*pflow(void *args){
 		
 		if(servTok>=maxC)
 			return (void*) -1;
-	//	int outval;
-	//	if(sem_getvalue(&empty, &outval)==-1){
-	//		cout<<"makaka"<<endl;
-	//	}
-	//	cout<<"_________Sem Wait Passed________"<<outval<<endl;
-
-		///////////////////////////////////
-		//ALL OF THE FOLLOWING CODE IS THE SAME AS IN FLOW EXCEPT THE RAN RANGE
-		///////////////////////////////////
-
-		int ran = rand()%5+1;			//generate random number between 1 and 10 to determine number of tokens to be inserted
-		int placed = 0;					//track number of tokens actually placed in the queue incase of overflow
-
-		//Lock the mutex so elements will not be removed from the queue by other threads while being inserted
-		if(pthread_mutex_lock(&qmtx))
-		{
-			cout<<"Mutex Lock Error"<<endl;
-			exit(-1);
-		}
-
-		/////////////////////////////////
-		if(pthread_mutex_lock(&smtx))
-		{
-			cout<<"Mutex Lock Error"<<endl;
-			exit(-1);
-		}
-		/////////////////////////////////
-
-		for(int i = 0; i<ran;i++)
-		{
-			//case - queue is not full
-			//action - insert tokens into the queue
-			if(!(queue->isFull()))
-			{
-				queue->EnQueue(currentSeq);
-				currentSeq++;
-				queueLen++;
-				placed++;
-			}
-			//case - queue is full
-			//action - serve overflowed tokens
-			else
-			{
-				servTok++;
-				if(servTok>=maxC)
-				{
-					break;
-				}
-			}
-		}
-		cout<<placed<<"(PFLOW)\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
-		pflowed+=placed;
-/////////////////////////////////////////
-		if(pthread_mutex_unlock(&smtx))
-		{
-			cout<<"Mutex Unlock Error"<<endl;
-			exit(-1);
-		}
-////////////////////////////////////////////
-
-		//Unlock the mutex so other threads may access the queue again
-		if(pthread_mutex_unlock(&qmtx))
-		{
-			cout<<"Mutex Unlock Error"<<endl;
-			exit(-1);
-		}
-	}
-
+	flowFunc(0);
 
 	return (void*)1;
 }
-
-
 
 
 
