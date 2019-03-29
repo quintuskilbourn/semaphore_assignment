@@ -251,7 +251,7 @@ void *flow(void *args)
 	//Run until as many tokens as the user desires are served
 	while(servTok<maxC)
 	{
-		flowFunc(1);
+		flowFunc(1, maxC, queue);
 
 		//Sleep for a user defined time period
 		usleep(flowInt*1000000);
@@ -275,7 +275,7 @@ void*pflow(void *args){
 		
 		if(servTok>=maxC)
 			return (void*) -1;
-	flowFunc(0);
+	flowFunc(0, maxC, queue);
 
 	return (void*)1;
 }
