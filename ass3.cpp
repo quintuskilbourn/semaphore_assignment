@@ -28,7 +28,7 @@ sem_t empty;
 int servTok = 0;
 int queueLen = 0;
 int totFetch = 0;
-int currentSeq = 0; ///////added new var//////////
+int currentSeq = 0; 
 int pflowed = 0;
 
 /*TODO
@@ -118,37 +118,6 @@ void *serve(void *args)
 			}
 		}
 
-
-// 		if(ran >= queueLen)
-// 		{
-// 			while(!(queue->isEmpty()))
-// 			{
-// 				if(servIncrement(queue, fetched, maxC,totFetch))
-// 				{
-// 					break;
-// 				}
-// 			}
-// 			sem_post(&empty);
-// 		//	int outval;
-// 		//	sem_getvalue(&empty, &outval);
-
-// 		//	cout<<"________SEM POSTED____"<<outval<<endl;
-// 		}
-// 		//Case - there are enough tokens present to be served
-// 		//Action - serve as many tokens as required
-// 		else
-// 		{
-// 			for(int i = 0; i<ran; i++)
-// 			{
-// 				if(servIncrement(queue, fetched, maxC,totFetch))
-// 				{
-// 					break;
-// 				}
-// 			}
-// 		}
-
-
-
 		cout<<"\t\t\t\t\t"<<queueLen<<"\t\t"<<fetched<<"\t\t"<<totFetch<<endl;
 
 		//Unlock the mutex so other threads may access the queue again
@@ -175,7 +144,7 @@ void flowFunc(bool flag, int maxC, MyQueue* queue){
 		ran = rand()%5+1;
 	else
 		ran = rand()%10+1;
-	int placed = 0;					//track number of tokens actually placed in the queue incase of overflow
+	int placed = 0;		//track number of tokens actually placed in the queue incase of overflow
 
 	//Lock the mutex so elements will not be removed from the queue by other threads while being inserted
 	if(pthread_mutex_lock(&qmtx))
@@ -265,9 +234,8 @@ void *flow(void *args)
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
 
-void*pflow(void *args){
+void* pflow(void *args){
 	MyQueue* queue;
 	int maxC, flowInt;
 	parseArgs(args, queue, maxC, flowInt);
