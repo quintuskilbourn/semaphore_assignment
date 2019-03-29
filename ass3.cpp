@@ -1,5 +1,5 @@
 /*
-CS3103 Assignment 2
+CS3103 Assignment 3 (PFIFO)
 Completed by:
 Quintus Kilbourn (54871935)
 Rohit Shyla Kumar (54581876)
@@ -31,8 +31,17 @@ int totFetch = 0;
 int currentSeq = 0; ///////added new var//////////
 int pflowed = 0;
 
+/*TODO
+Remove global vars where possible
+if totfetch still global var - remove from servincrement params
+commenting
+txt file
+*/
+
+
+
 //Function to serve a single token
-bool servIncrement(MyQueue* queue, int &fetched, int &maxC,int &totFetch)		////DONT HAVE TO PASS TOTFETCH IF GLOBAL VAR
+bool servIncrement(MyQueue* queue, int &fetched, int &maxC,int &totFetch) 	 ////DONT HAVE TO PASS TOTFETCH IF GLOBAL VAR
 {
 	//Ensure the queue is not empty
 	if(queue->DeQueue()==-1)
@@ -65,8 +74,6 @@ void parseArgs(void *args,MyQueue* &queue,int &maxC,int &flowInt)
 	maxC = *(toInt[2]);
 	flowInt = *(toInt[0]);
 }
-
-
 
 
 
@@ -161,7 +168,9 @@ void *serve(void *args)
 
 
 
-
+int flowFunc(int ranRange){
+///		
+}
 
 
 
