@@ -41,7 +41,7 @@ txt file
 
 
 //Function to serve a single token
-bool servIncrement(MyQueue* queue, int &fetched, int &maxC,int &totFetch) 	 ////DONT HAVE TO PASS TOTFETCH IF GLOBAL VAR
+bool servIncrement(MyQueue* queue, int &fetched, int maxC,int &totFetch) 	 ////DONT HAVE TO PASS TOTFETCH IF GLOBAL VAR
 {
 	//Ensure the queue is not empty
 	if(queue->DeQueue()==-1)
@@ -168,7 +168,7 @@ void *serve(void *args)
 
 
 
-void flowFunc(bool flag, int maxC, MyQueue queue){
+void flowFunc(bool flag, int maxC, MyQueue* queue){
 	int ran;
 	//// 0 for pflow
 	if (flag == 0)
@@ -276,7 +276,7 @@ void*pflow(void *args){
 		if(servTok>=maxC)
 			return (void*) -1;
 	flowFunc(0, maxC, queue);
-
+	}
 	return (void*)1;
 }
 
