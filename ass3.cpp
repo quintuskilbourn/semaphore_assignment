@@ -220,7 +220,7 @@ void *flow(void *args)
 				}
 			}
 		}
-		cout<<placed<<"(FLOW)\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
+		cout<<placed<<"(FLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
 
 		//////////////////////////////////////////////
 		if(pthread_mutex_unlock(&smtx))
