@@ -49,6 +49,7 @@ bool servIncrement(MyQueue* queue, int &fetched, int &maxC,int &totFetch)		////D
 	{
 		return 1;
 	}
+	
 	return 0;
 }
 
