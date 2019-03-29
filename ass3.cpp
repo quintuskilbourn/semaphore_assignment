@@ -153,6 +153,7 @@ void *serve(void *args)
 		//Sleep for a constant 2 second time
 		usleep(SSLEEP);
 	}
+	sem_post(&empty); ////not final solution
 	//void *retVal = &totFetch;
 	return (void*)1;
 }
