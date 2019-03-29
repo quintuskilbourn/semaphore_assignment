@@ -27,6 +27,7 @@ static pthread_mutex_t smtx = PTHREAD_MUTEX_INITIALIZER;
 sem_t empty;
 int servTok = 0;
 int queueLen = 0;
+int totFetch = 0;
 int currentSeq = 0; ///////added new var//////////
 
 //Function to serve a single token
@@ -77,7 +78,7 @@ void *serve(void *args)
 	int maxC, flowInt;
 	parseArgs(args, queue, maxC, flowInt);
 	static int fetched;
-	int totFetch = 0;
+	//int totFetch = 0;
 	//Run until as many tokens as the user desires are served
 	while(servTok<maxC)
 	{
@@ -152,8 +153,8 @@ void *serve(void *args)
 		//Sleep for a constant 2 second time
 		usleep(SSLEEP);
 	}
-	void *retVal = &totFetch;
-	return retVal;
+	//void *retVal = &totFetch;
+	return (void*)1;
 }
 
 
@@ -381,14 +382,14 @@ int main(int argc, char* argv[])
 	}
 
 
-	void* retVal;						//temporarily store return value from server thread
+	//void* retVal;						//temporarily store return value from server thread
 
 	//Wait for the thread functions to return before continuing with the main thread's functions
-	pthread_join(servId,&retVal);
+	pthread_join(servId,NULL);
 	pthread_join(flowId,NULL);
 	pthread_join(pflowId,NULL);
 
-	int totFetch = *((int *)retVal);	//convert value returned from server thread
+	//int totFetch = *((int *)retVal);	//convert value returned from server thread
 
 	sem_destroy(&empty);
 	//Print final results
