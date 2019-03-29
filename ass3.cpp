@@ -154,7 +154,7 @@ void *serve(void *args)
 		//Sleep for a constant 2 second time
 		usleep(SSLEEP);
 	}
-//	sem_post(&empty); ////not final solution
+	sem_post(&empty); ////not final solution
 	//void *retVal = &totFetch;
 	return (void*)1;
 }
@@ -389,9 +389,8 @@ int main(int argc, char* argv[])
 	//Wait for the thread functions to return before continuing with the main thread's functions
 	pthread_join(servId,NULL);
 	pthread_join(flowId,NULL);
-	sem_destroy(&empty);
 	pthread_join(pflowId,NULL);
-
+	sem_destroy(&empty);
 	//int totFetch = *((int *)retVal);	//convert value returned from server thread
 
 	
