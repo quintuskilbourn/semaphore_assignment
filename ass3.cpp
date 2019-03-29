@@ -121,10 +121,10 @@ void *serve(void *args)
 				}
 			}
 			sem_post(&empty);
-			int outval;
-			sem_getvalue(&empty, &outval);
+		//	int outval;
+		//	sem_getvalue(&empty, &outval);
 
-			cout<<"________SEM POSTED____"<<outval<<endl;
+		//	cout<<"________SEM POSTED____"<<outval<<endl;
 		}
 		//Case - there are enough tokens present to be served
 		//Action - serve as many tokens as required
@@ -254,11 +254,11 @@ void*pflow(void *args){
 //		cout<<"_________Sem Wait Called________"<<endl;
 
 		sem_wait(&empty);
-		int outval;
-		if(sem_getvalue(&empty, &outval)==-1){
-			cout<<"makaka"<<endl;
-		}
-		cout<<"_________Sem Wait Passed________"<<outval<<endl;
+	//	int outval;
+	//	if(sem_getvalue(&empty, &outval)==-1){
+	//		cout<<"makaka"<<endl;
+	//	}
+	//	cout<<"_________Sem Wait Passed________"<<outval<<endl;
 
 		///////////////////////////////////
 		//ALL OF THE FOLLOWING CODE IS THE SAME AS IN FLOW EXCEPT THE RAN RANGE
