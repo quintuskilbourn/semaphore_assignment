@@ -168,12 +168,12 @@ void *serve(void *args)
 
 
 
-void flowFunc(bool flag){
+void flowFunc(bool flag, int maxC, MyQueue queue){
 	int ran;
 	//// 0 for pflow
 	if (flag == 0)
 		ran = rand()%5+1;
-	else{
+	else
 		ran = rand()%10+1;
 	int placed = 0;					//track number of tokens actually placed in the queue incase of overflow
 
@@ -215,7 +215,7 @@ void flowFunc(bool flag){
 			}
 		}
 	}
-	if (flag !0)
+	if (flag != 0)
 		cout<<placed<<"(FLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
 	else 
 		cout<<placed<<"(PFLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
