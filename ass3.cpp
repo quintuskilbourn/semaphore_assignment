@@ -31,7 +31,7 @@ int totFetch = 0;
 int currentSeq = 0; ///////added new var//////////
 
 //Function to serve a single token
-bool servIncrement(MyQueue* queue, int &fetched, int &maxC,int &totFetch)
+bool servIncrement(MyQueue* queue, int &fetched, int &maxC,int &totFetch)		////DONT HAVE TO PASS TOTFETCH IF GLOBAL VAR
 {
 	//Ensure the queue is not empty
 	if(queue->DeQueue()==-1)
