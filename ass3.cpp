@@ -216,10 +216,15 @@ void flowFunc(bool flag, int maxC, MyQueue* queue){
 		}
 	}
 	if (flag != 0)
+	{
 		cout<<placed<<"(FLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
-	else 
-		cout<<placed<<"(PFLOW)\t\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
-
+	}
+	else
+	{
+		pflowed +=placed;
+		cout<<placed<<"(PFLOW)\t"<<currentSeq-1<<"\t\t\t"<<queueLen<<endl;
+	}
+	
 	//////////////////////////////////////////////
 	if(pthread_mutex_unlock(&smtx))
 	{
