@@ -15,7 +15,7 @@ g++ 54871935_54581876.cpp MyQueue.cpp MyQueue.h -o PFIFO -lpthread
 File must be executed with two integer arguments
     
 
-./PFIFO
+./PFIFO 30 1
     
 
 where 30 is Max Token and 1 is the interval of the flow (flow interval)
